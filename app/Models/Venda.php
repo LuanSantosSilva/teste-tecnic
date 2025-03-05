@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Venda extends Model
 {
     protected $table = 'vendas';
-    protected $fillable = ['cliente_id', 'valor', 'qtnd_parcelas'];
+    protected $fillable = ['user_id', 'cliente_id', 'valor', 'qtnd_parcelas'];
 
     protected static function boot()
     {
@@ -29,5 +29,9 @@ class Venda extends Model
 
     public function parcelas() {
         return $this->hasMany(Parcela::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

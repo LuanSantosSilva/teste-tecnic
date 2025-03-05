@@ -13,6 +13,8 @@
 </head>
 <body>
     <h2>Detalhes da Venda #{{ $venda->id }}</h2>
+    <p><strong>Vendedor:</strong> {{ $venda->user->name }}</p>
+    <p><strong>E-mail Vendedor:</strong> {{ $venda->user->email }}</p>
     <p><strong>Cliente:</strong> {{ $venda->cliente->nome }}</p>
     <p><strong>CPF:</strong> {{ $venda->cliente->cpf }}</p>
     <p><strong>Valor Total:</strong> R$ {{ number_format($venda->valor, 2, ',', '.') }}</p>

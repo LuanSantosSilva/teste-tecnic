@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('titulo', 'Produtos')
+
 @section('content')
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
+    <div class="max-w-full mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Lista de Produtos</h1>
 
         @if(session('success'))

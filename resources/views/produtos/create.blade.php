@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo', 'Cadastro de produtos')
+
 @section('content')
     <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Cadastro de Produto</h1>

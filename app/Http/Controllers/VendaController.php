@@ -8,6 +8,7 @@ use App\Models\ItensVenda;
 use App\Models\Parcela;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 
 class VendaController extends Controller
@@ -97,6 +98,7 @@ class VendaController extends Controller
         }
     
         $venda = Venda::create([
+            'user_id' => Auth::user()->id,
             'cliente_id' => $request->cliente_id,
             'valor' => $valorTotal,
             'qtnd_parcelas' => count($request->parcelas['numero']),
@@ -133,7 +135,8 @@ class VendaController extends Controller
 
     public function gerarPdf($id)
     {
-        $venda = Venda::with(['cliente', 'produtos'])->findOrFail($id);
+        $venda = Venda::with(['cliente', 'produtos', 'user'])->findOrFail($id);
+        //dd($venda);
         $pdf = Pdf::loadView('vendas.pdf', compact('venda'));
         return $pdf->download("venda_{$venda->id}.pdf");
     }
@@ -146,6 +149,11 @@ class VendaController extends Controller
         $venda = Venda::with(['cliente', 'produtos', 'parcelas'])->findOrFail($id);
         $clientes = Cliente::all();
         $produtos = Produto::all();
+
+        if ($venda->user_id !== Auth::id()) {
+            return redirect()->route('vendas.index')->with('error', 'Você não tem permissão para editar esta venda. Apenas quem a realizou pode editá-la.');
+            #abort(403, 'Você não tem permissão para editar esta venda. Apenas quem a realizou pode editá-la.');
+        }
 
         //dd($venda->produtos[0]->pivot->quantidade);
         return view('vendas.edit', compact('clientes', 'produtos', 'venda'));
@@ -215,6 +223,9 @@ class VendaController extends Controller
     public function destroy(string $id)
     {
         $venda = Venda::findOrFail($id);
+        if ($venda->user_id !== Auth::id()) {
+            return redirect()->route('vendas.index')->with('error', 'Você não tem permissão para excluir esta venda. Apenas quem a realizou pode exclui-la.');
+        }
 
         try {
             $venda->delete();

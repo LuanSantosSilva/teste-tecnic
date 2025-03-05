@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo', 'Editar venda')
+
 @section('content')
     <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <h1 class="text-2xl font-bold mb-4 text-gray-800">Editar Venda</h1>

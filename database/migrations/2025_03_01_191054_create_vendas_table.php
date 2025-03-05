@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cliente_id');
             $table->float('valor', 8, 2)->nullable();
             $table->integer('qtnd_parcelas')->default(1);
             $table->timestamps();
 
             $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

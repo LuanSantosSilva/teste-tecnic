@@ -1,12 +1,20 @@
 @extends('layouts.app')
 
+@section('titulo', 'Vendas')
+
 @section('content')
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+                {{ session('error') }}
+            </div>
+        @endif
+
+    <div class="max-w-full mx-auto bg-white shadow-md rounded-lg p-6 mt-6">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Lista de Vendas</h1>
 
         <form method="GET" action="{{ route('vendas.index') }}" class="mb-6 flex space-x-4 items-end">
@@ -46,6 +54,7 @@
             <table class="min-w-full bg-white border border-gray-300 rounded-lg">
                 <thead>
                     <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Vendedor</th>
                         <th class="py-3 px-6 text-left">Cliente</th>
                         <th class="py-3 px-6 text-left">CPF</th>
                         <th class="py-3 px-6 text-center">Valor</th>
@@ -56,6 +65,7 @@
                 <tbody class="text-gray-600 text-sm">
                     @foreach ($vendas as $venda)
                         <tr class="border-b border-gray-300 hover:bg-gray-100">
+                            <td class="py-3 px-6">{{ $venda->user->name }}</td>
                             <td class="py-3 px-6">{{ $venda->cliente->nome }}</td>
                             <td class="py-3 px-6">{{ $venda->cliente->cpf }}</td>
                             <td class="py-3 px-6 text-center font-semibold text-green-600">
